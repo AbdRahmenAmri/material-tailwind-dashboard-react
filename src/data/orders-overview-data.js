@@ -1,5 +1,4 @@
 import {
-  BellIcon,
   PlusCircleIcon,
   ShoppingCartIcon,
   CreditCardIcon,
@@ -9,7 +8,7 @@ import {
 
 export const ordersOverviewData = [
   {
-    icon: BellIcon,
+    icon: CreditCardIcon,
     color: "text-green-500",
     title: "$2400, Design changes",
     description: "22 DEC 7:20 PM",

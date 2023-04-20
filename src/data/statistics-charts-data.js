@@ -6,7 +6,7 @@ const websiteViewsChart = {
   series: [
     {
       name: "Views",
-      data: [50, 20, 10, 22, 50, 10, 40],
+      data: [0,0,0,0,0,0,0,0,0,0,0,0,5],
     },
   ],
   options: {
@@ -20,7 +20,19 @@ const websiteViewsChart = {
     },
     xaxis: {
       ...chartsConfig.xaxis,
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: ["Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr"],
     },
   },
 };
@@ -75,23 +87,55 @@ export const statisticsChartsData = [
     color: "blue",
     title: "Website View",
     description: "Last Campaign Performance",
-    footer: "campaign sent 2 days ago",
-    chart: websiteViewsChart,
+    chart: {
+      type: "bar",
+      height: 220,
+      series: [
+        {
+          name: "Views",
+          data: [0,0,0,0,0,0,0,0,0,0,0,0,5],
+        },
+      ],
+      options: {
+        ...chartsConfig,
+        colors: "#fff",
+        plotOptions: {
+          bar: {
+            columnWidth: "16%",
+            borderRadius: 5,
+          },
+        },
+        xaxis: {
+          ...chartsConfig.xaxis,
+          categories: ["Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr"],
+        },
+      },
+    },
   },
-  {
+/*   {
     color: "pink",
     title: "Daily Sales",
     description: "15% increase in today sales",
-    footer: "updated 4 min ago",
     chart: dailySalesChart,
   },
   {
     color: "green",
     title: "Completed Tasks",
     description: "Last Campaign Performance",
-    footer: "just updated",
     chart: completedTasksChart,
-  },
+  }, */
 ];
 
 export default statisticsChartsData;

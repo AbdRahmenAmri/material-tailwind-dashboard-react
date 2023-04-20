@@ -9,10 +9,13 @@ import {
 } from "@/widgets/layout";
 import routes from "@/routes";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import useLogedOut from "@/hooks/use_loged_out";
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
+
+  useLogedOut();
 
   return (
     <div className="min-h-screen bg-blue-gray-50/50">

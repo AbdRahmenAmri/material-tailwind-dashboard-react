@@ -2,12 +2,11 @@ import {
   HomeIcon,
   UserCircleIcon,
   TableCellsIcon,
-  BellIcon,
-  ArrowRightOnRectangleIcon,
-  UserPlusIcon,
+  ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/solid";
+import {TbGeometry} from 'react-icons/tb'
 import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
-import { SignIn, SignUp } from "@/pages/auth";
+import Logout from "./pages/auth/logout";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -31,18 +30,24 @@ export const routes = [
       },
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "tables",
+        name: "Plans",
         path: "/tables",
         element: <Tables />,
       },
       {
-        icon: <BellIcon {...icon} />,
-        name: "notifactions",
+        icon: <TbGeometry {...icon} />,
+        name: "Try",
         path: "/notifactions",
         element: <Notifications />,
       },
+      {
+        icon: <ArrowLeftOnRectangleIcon {...icon} />,
+        name: "Logout",
+        path: "/logout",
+        element: <Logout />,
+      },
     ],
-  },
+  }/* ,
   {
     title: "auth pages",
     layout: "auth",
@@ -60,7 +65,7 @@ export const routes = [
         element: <SignUp />,
       },
     ],
-  },
+  }, */
 ];
 
 export default routes;
