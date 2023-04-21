@@ -9,6 +9,7 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Links from "@/static/Links";
 
 export function Navbar({ brandName, routes, action }) {
   const [openNav, setOpenNav] = React.useState(false);
@@ -85,14 +86,10 @@ export function Navbar({ brandName, routes, action }) {
 Navbar.defaultProps = {
   brandName: "AI Tailor",
   action: (
-    <a
-      href="https://www.creative-tim.com/product/material-tailwind-dashboard-react"
-      target="_blank"
+    <Link
+      to={Links.home}
     >
-      <Button variant="gradient" size="sm" fullWidth>
-        free download
-      </Button>
-    </a>
+    </Link>
   ),
 };
 

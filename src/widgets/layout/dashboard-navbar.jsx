@@ -2,22 +2,11 @@ import { useLocation, Link } from "react-router-dom";
 import {
   Navbar,
   Typography,
-  Button,
   IconButton,
   Breadcrumbs,
-  Input,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
 } from "@material-tailwind/react";
 import {
-  UserCircleIcon,
   Cog6ToothIcon,
-  BellIcon,
-  ClockIcon,
-  CreditCardIcon,
   Bars3Icon,
 } from "@heroicons/react/24/solid";
 import {
@@ -25,12 +14,15 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "@/context";
+import useLogedOut from "@/hooks/use_loged_out";
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
   const [layout, page] = pathname.split("/").filter((el) => el !== "");
+
+  useLogedOut();
 
   return (
     <Navbar

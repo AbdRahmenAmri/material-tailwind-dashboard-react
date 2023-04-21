@@ -5,7 +5,7 @@ import {
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import {TbGeometry} from 'react-icons/tb'
-import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
+import { Home, Profile, Plans, Notifications } from "@/pages/dashboard";
 import Logout from "./pages/auth/logout";
 
 const icon = {
@@ -31,13 +31,13 @@ export const routes = [
       {
         icon: <TableCellsIcon {...icon} />,
         name: "Plans",
-        path: "/tables",
-        element: <Tables />,
+        path: "/plans",
+        element: <Plans />,
       },
       {
         icon: <TbGeometry {...icon} />,
         name: "Try",
-        path: "/notifactions",
+        path: "/try",
         element: <Notifications />,
       },
       {

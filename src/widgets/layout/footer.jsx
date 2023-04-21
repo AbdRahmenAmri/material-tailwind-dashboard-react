@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Typography } from "@material-tailwind/react";
 import { HeartIcon } from "@heroicons/react/24/solid";
 
-export function Footer({ brandName, brandLink, routes }) {
+export function Footer({ brandName, brandLink}) {
   const year = new Date().getFullYear();
 
   return (
@@ -26,8 +26,8 @@ export function Footer({ brandName, brandLink, routes }) {
 }
 
 Footer.defaultProps = {
-  brandName: "Creative Tim",
-  brandLink: "https://www.creative-tim.com"
+  brandName: "Abdou",
+  brandLink: "https://abdrahmen.me"
 };
 
 Footer.propTypes = {

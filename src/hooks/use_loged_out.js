@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 const useLogedOut = () => {
   const navigate = useNavigate();
   useLayoutEffect(() => {
-    isLoged().catch(err=>navigate(Links.home))
+    isLoged().catch(err=>{
+      navigate(Links.home)
+    })
   }, []);
 };
 
