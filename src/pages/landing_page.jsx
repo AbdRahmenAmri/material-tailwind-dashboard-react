@@ -4,10 +4,18 @@ import { Link } from "react-router-dom";
 import Links from "@/static/Links";
 import useTitle from "@/hooks/title";
 import useLogedIn from "@/hooks/use_loged_in";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Typography,
+} from "@material-tailwind/react";
+
+import { Footer } from "@/widgets/layout";
 
 export default function LandingPage() {
-  useTitle('Home | AI Tailor')
-  useLogedIn()
+  useTitle("Home | AI Tailor");
+  useLogedIn();
   return (
     <div className="bg-white py-24 sm:py-32">
       <Header />
@@ -24,7 +32,7 @@ export default function LandingPage() {
             }}
           />
         </div>
-        <div className="mx-auto max-w-2xl py-8 sm:py-48 lg:py-8 h-screen">
+        <div className="mx-auto h-screen max-w-2xl py-8 sm:py-48 lg:py-8">
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               Your Body Measurements with AI.
@@ -65,7 +73,21 @@ export default function LandingPage() {
           />
         </div>
       </div>
-      <Plan />
+      <div className="gird-cols-1 mb-12 grid w-full gap-12 px-4">
+        <Card>
+          <CardHeader variant="gradient" color="blue" className="mb-8 p-6">
+            <Typography variant="h6" color="white">
+              Plans
+            </Typography>
+          </CardHeader>
+          <CardBody className="px-0 pt-0 pb-2">
+            <Plan />
+          </CardBody>
+        </Card>
+      </div>
+      <div className="text-blue-gray-600 grid place-items-center">
+        <Footer />
+      </div>
     </div>
   );
 }

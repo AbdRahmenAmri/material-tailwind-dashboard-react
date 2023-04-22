@@ -7,11 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { StatisticsCard } from "@/widgets/cards";
 import { StatisticsChart } from "@/widgets/charts";
-import {
-  projectsTableData,
-  ordersOverviewData,
-  statisticsChartsData,
-} from "@/data";
+import { ordersOverviewData } from "@/data";
 import { useLayoutEffect } from "react";
 import useTitle from "@/hooks/title";
 import { hasAdmin } from "@/services/Auth";
@@ -21,8 +17,15 @@ import {
   yearlyEarn,
   yearlyUser,
 } from "@/services/admin";
-import { string } from "prop-types";
 import { paymentsHistory } from "@/services/payments";
+import {
+  getUserSubscription,
+  getUserToken,
+  monthlyRequest,
+  userInfo,
+  yearlyRequest,
+} from "@/services/user";
+import { CircleStackIcon } from "@heroicons/react/24/solid";
 
 export function Home() {
   useTitle("Dashboard Home");
@@ -30,9 +33,8 @@ export function Home() {
   const [cardsData, setCardsData] = useState([]);
   const [chartsData, setChartsData] = useState([]);
   const [paymentsData, setPaymentsData] = useState([]);
-  const [isChartsReady, setChartsReady] = useState(false);
-  const [isCardsReady, setCardsReady] = useState(false);
-  const [isPaymentsReady, setPaymentsReady] = useState(false);
+
+  const [user, setUser] = useState(false);
 
   useLayoutEffect(() => {
     hasAdmin()
@@ -47,51 +49,64 @@ export function Home() {
           .then(() => {
             yearlyEarn().then((data) => {
               setCardsData((cardsData) => [...cardsData, data]);
-              setCardsReady(true);
             });
           });
         yearlyUser()
           .then((data) => {
-            console.log(data);
-            console.log(statisticsChartsData[0]);
             setChartsData((chartsData) => [...chartsData, data]);
           })
           .then(() => {
             dailyUser().then((data) => {
               setChartsData((chartsData) => [...chartsData, data]);
-              setChartsReady(true);
             });
           });
       })
       .catch((err) => {
         setIsadmin(err);
-      });0
-      paymentsHistory().then(data=>{
-        setPaymentsData(paymentsData=>[...paymentsData, data])
-        setPaymentsReady(true)
-      })
+        getUserToken()
+          .then((data) => {
+            setCardsData((cardsData) => [...cardsData, data]);
+          })
+          .then(() => {
+            getUserSubscription().then((data) =>
+              setCardsData((cardsData) => [...cardsData, data])
+            );
+          })
+          .then(() => {
+            yearlyRequest()
+              .then((data) => {
+                setChartsData((chartsData) => [...chartsData, data]);
+              })
+              .then(() => {
+                monthlyRequest().then((data) => {
+                  setChartsData((chartsData) => [...chartsData, data]);
+                });
+              });
+          });
+      });
+    paymentsHistory().then((data) => {
+      setPaymentsData(data);
+    });
   }, []);
 
   return (
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-2">
-        {isCardsReady &&
-          cardsData.map(({ icon, title, ...rest }) => (
-            <StatisticsCard
-              key={title}
-              {...rest}
-              title={title}
-              icon={React.createElement(icon, {
-                className: "w-6 h-6 text-white",
-              })}
-            />
-          ))}
+        {cardsData.map(({ icon, title, ...rest }) => (
+          <StatisticsCard
+            key={title}
+            {...rest}
+            title={title}
+            icon={React.createElement(icon, {
+              className: "w-6 h-6 text-white",
+            })}
+          />
+        ))}
       </div>
       <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 lg:grid-cols-2 xl:grid-cols-2">
-        {isChartsReady &&
-          chartsData.map((props) => (
-            <StatisticsChart key={props.title} {...props} />
-          ))}
+        {chartsData.map((props) => (
+          <StatisticsChart key={props.title} {...props} />
+        ))}
       </div>
       <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-1">
         <Card>
@@ -106,40 +121,37 @@ export function Home() {
             </Typography>
           </CardHeader>
           <CardBody className="pt-0">
-            { isPaymentsReady &&
-              paymentsData.map(
-                ({ icon, color, title, description }, key) => (
-                  <div key={title} className="flex items-start gap-4 py-3">
-                    <div
-                      className={`relative p-1 after:absolute after:-bottom-6 after:left-2/4 after:w-0.5 after:-translate-x-2/4 after:bg-blue-gray-50 after:content-[''] ${
-                        key === ordersOverviewData.length - 1
-                          ? "after:h-0"
-                          : "after:h-4/6"
-                      }`}
-                    >
-                      {React.createElement(icon, {
-                        className: `!w-5 !h-5 ${color}`,
-                      })}
-                    </div>
-                    <div>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="block font-medium"
-                      >
-                        {title}
-                      </Typography>
-                      <Typography
-                        as="span"
-                        variant="small"
-                        className="text-xs font-medium text-blue-gray-500"
-                      >
-                        {description}
-                      </Typography>
-                    </div>
-                  </div>
-                )
-              )}
+            {paymentsData.map(({ icon, color, title, description }, key) => (
+              <div key={key} className="flex items-start gap-4 py-3">
+                <div
+                  className={`relative p-1 after:absolute after:-bottom-6 after:left-2/4 after:w-0.5 after:-translate-x-2/4 after:bg-blue-gray-50 after:content-[''] ${
+                    key === paymentsData.length - 1
+                      ? "after:h-0"
+                      : "after:h-4/6"
+                  }`}
+                >
+                  {React.createElement(icon, {
+                    className: `!w-5 !h-5 ${color}`,
+                  })}
+                </div>
+                <div>
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="block font-medium"
+                  >
+                    {title}
+                  </Typography>
+                  <Typography
+                    as="span"
+                    variant="small"
+                    className="text-xs font-medium text-blue-gray-500"
+                  >
+                    {description}
+                  </Typography>
+                </div>
+              </div>
+            ))}
           </CardBody>
         </Card>
       </div>

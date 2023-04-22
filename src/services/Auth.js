@@ -71,8 +71,8 @@ const isLoged = async () => {
     isAdmin().then(res=>{
       if(res.status === 200) resolve(true)
     }).catch(err=>{
-      if(err.status === 401) reject(false)
-      if(err.status === 500) return isLoged()
+      if(err.response.status === 401) reject(false)
+      if(err.response.status === 500) return isLoged()
     })
   });
 };
@@ -83,8 +83,8 @@ const hasAdmin = async () => {
       if(res.status === 200 && res.data.isAdmin === true) resolve(true)
       else reject(false)
     }).catch(err=>{
-      if(err.status === 401) reject(false)
-      if(err.status === 500) return isLoged()
+      if(err.response.status === 401) reject(false)
+      if(err.response.status === 500) return hasAdmin()
     })
   });
 };

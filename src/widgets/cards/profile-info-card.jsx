@@ -6,9 +6,9 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-export function ProfileInfoCard({ title, details }) {
+export function ProfileInfoCard({ title, details, className }) {
   return (
-    <Card color="transparent" shadow={false}>
+    <Card color="transparent" shadow={false} className={className}>
       <CardHeader
         color="transparent"
         shadow={false}
